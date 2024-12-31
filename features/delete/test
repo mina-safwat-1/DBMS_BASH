@@ -1,3 +1,0 @@
-#!/usr/bin/bash -x
-
-./delete "./data.csv" "index" "1"

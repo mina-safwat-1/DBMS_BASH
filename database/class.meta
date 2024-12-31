@@ -1,0 +1,5 @@
+table_name:class
+columns_number:1
+columns_name:id
+columns_datatypes:int
+pk_column_number:1

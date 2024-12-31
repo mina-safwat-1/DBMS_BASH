@@ -196,8 +196,6 @@ select_from_table() {
 }
 
 
-
-
 delete_from_table() {
 	echo "delete functionality Not implemented Yet :("
 }
