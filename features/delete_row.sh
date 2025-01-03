@@ -20,12 +20,4 @@ delete $1 $2 $3
 # 6 - user enter value (validate empty line + validate data type)
 
 
-# # insert
-# 1 - select database
-# 2 - select insert data
-# 3 - select table (selection) (ls)
-# 	# loop
-# 	4.1 - show each column in table with data type
-# 	4.2 - insert column by column (validate empyt line + validate data type)
-
 

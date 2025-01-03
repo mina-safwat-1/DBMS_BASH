@@ -2,7 +2,9 @@
 
 source config
 source features/create_table.sh
+source features/insert.sh
 source features/rest.sh
+
 
 validate_db_name() {
   if [[ $1 =~ ^[a-z][a-z0-9_]*$ ]]; then
@@ -165,10 +167,6 @@ table_menu() {
 done
 }
 
-
-insert_into_table() {
-	echo "insert functionality Not implemented Yet :("
-}
 
 delete_from_table() {
 	echo "delete functionality Not implemented Yet :("

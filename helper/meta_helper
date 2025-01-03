@@ -1,0 +1,81 @@
+#!/usr/bin/bash
+
+# meta data
+# table_name:students
+# columns_number:3
+# columns_name:id,name,degree
+# columns_datatypes:int,string,int
+# pk_column_number:1
+
+
+function get_meta_data {
+    # cat meta data file without headers
+    # $1 meta file path
+    meta_content=$(cat $1 | cut -d : -f2)
+    echo $meta_content
+}
+
+
+function get_meta_n_columns {
+    meta_data=$(get_meta_data $1)
+    n_columns=$(echo $meta_data | cut -d " " -f2)
+    echo $n_columns
+}
+
+function get_meta_names_columns {
+    meta_data=$(get_meta_data $1)
+    names_columns=$(echo $meta_data | cut -d " " -f3)
+    echo $names_columns
+}
+
+function get_meta_dt_columns {
+    meta_data=$(get_meta_data $1)
+    dt_columns=$(echo $meta_data | cut -d " " -f4)
+    echo $dt_columns
+}
+
+function get_meta_pk_index {
+    meta_data=$(get_meta_data $1)
+    pk_index=$(echo $meta_data | cut -d " " -f5)
+    echo $pk_index
+}
+
+
+function get_values_data {
+    # $1 index of column
+    # $2 file
+    column_data=$(cut -d , -f $1 $2)
+    echo $column_data   
+}
+
+
+
+function search_value_data {
+    # $1 only one value that i look forward it
+    # $2 list
+    
+    if [[ " $2 " =~ " $1 " ]]; then
+        return 1
+    fi
+    return 0
+}
+
+function check_unique_data {
+    # $1 is index of column
+    # $2 file path
+    # $3 input of user
+
+    column_data=$(get_values_data $1 $2)
+
+
+
+
+    if search_value_data "$3" "$column_data"; then
+        return 0
+    fi
+
+    echo "pk must be unique"
+    return 1
+
+}
+

@@ -1,0 +1,5 @@
+table_name:students
+columns_number:2
+columns_name:id,name
+columns_datatypes:int,string
+pk_column_number:1

@@ -22,8 +22,12 @@ drop_table() {
 }
 
 
+
+
+# we need to check
 select_from_table() {
   read -p "Enter the table name: " table_name
+  table_name="$table_name.data"
   if [[ -f "$table_name" ]]; then
     echo "Contents of table '$table_name':"
       column -t -s ',' "$table_name"
