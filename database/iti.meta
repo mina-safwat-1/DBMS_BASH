@@ -1,5 +1,5 @@
 table_name:iti
 columns_number:3
 columns_name:id,age,nationality
-columns_datatypes:int,text,text
+columns_datatypes:int,int,text
 pk_column_number:1

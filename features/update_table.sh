@@ -1,4 +1,5 @@
 #!/bin/bash
+source "helper/validation"
 
 ## to select table from database directory
 function select_table
@@ -98,12 +99,12 @@ function insert_updated_value
             insert_updated_value
             return
         fi
-    # else 
-    #     # if ! [[ "$new_value" =~ ^[a-zA-Z]+$ ]]; then
-    #     #     echo "Invalid text input. Please enter only letters."
-    #     #     insert_updated_value
-    #     #     return
-    #     # fi
+    else 
+        if ! check_empty_string "$new_value";then
+            echo "Invalid text input."
+            insert_updated_value
+            return
+        fi
     fi
     
     ## check if we are updating the primary key column
