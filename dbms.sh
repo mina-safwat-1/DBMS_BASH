@@ -1,5 +1,9 @@
 #!/usr/bin/bash
 
+source config
+source features/create_table.sh
+source features/rest.sh
+
 validate_db_name() {
   if [[ $1 =~ ^[a-z][a-z0-9_]*$ ]]; then
     return 0 # Valid name
@@ -9,7 +13,7 @@ validate_db_name() {
 }
 
 db_exists() {
-  if [[ -d ~/DBs/"$1" ]]; then
+  if [[ -d $db_path/"$1" ]]; then
     return 0 # Exists
   else
     return 1 # Does not exist
@@ -17,7 +21,7 @@ db_exists() {
 }
 
 not_inside_db() {
-  if [[ $(pwd) != ~/DBs/"$1" ]]; then
+  if [[ $(pwd) != $db_path/"$1" ]]; then
     return 0 # Not inside
   else
     return 1 # Inside
@@ -28,7 +32,7 @@ create_database() {
   read -p "Please enter Database name: " db_name
   if validate_db_name "$db_name"; then
     if ! db_exists "$db_name"; then
-      mkdir -p ~/DBs/"$db_name" && echo "Database '$db_name' created successfully."
+      mkdir -p $db_path/"$db_name" && echo "Database '$db_name' created successfully."
     else
       echo "Error: Database '$db_name' already exists."
     fi
@@ -38,18 +42,20 @@ create_database() {
 }
 
 list_databases() {
-  if [[ -d ~/DBs ]]; then
+  if [[ -d $db_path ]]; then
     echo "Available Databases:"
-    ls ~/DBs | awk '{print "+ " $0}' 
+    ls $db_path | awk '{print "+ " $0}' 
   else
-    echo "No databases found. ~/DBs directory does not exist."
+    echo "No databases found. $db_path directory does not exist."
   fi
 }
 
 connect_to_database() {
+
+# validate empty line
   read -p "Please enter Database name: " db_name
   if db_exists "$db_name"; then
-    cd ~/DBs/"$db_name" || echo "Error: Could not connect to database '$db_name'."
+    cd $db_path/"$db_name" || echo "Error: Could not connect to database '$db_name'."
     table_menu
   else
     echo "Error: Database '$db_name' does not exist."
@@ -61,7 +67,7 @@ drop_database() {
   read -p "Please enter Database name: " db_name
   if db_exists "$db_name"; then
     if not_inside_db; then
-      rm -r ~/DBs/"$db_name" && echo "Database '$db_name' dropped successfully."
+      rm -r $db_path/"$db_name" && echo "Database '$db_name' dropped successfully."
     else
       echo "Error: Cannot drop the database while inside it."
     fi
@@ -127,7 +133,7 @@ table_menu() {
 
 	case $choice in
 	  1)
-	    create_table
+	    create_table .
 	    ;;
 	  2)
 	    list_tables
@@ -159,42 +165,10 @@ table_menu() {
 done
 }
 
-create_table() {
-  echo "create functionality Not implemented Yet :("
-}
-
-list_tables() {
-  echo "Tables in the current database:"
-  if [[ $(ls | wc -l) -gt 0 ]]; then
-    ls -1 | awk '{print "- " $0}'
-  else
-    echo "No tables found."
-  fi
-}
-
-drop_table() {
-  read -p "Enter the table name to drop: " table_name
-  if [[ -f "$table_name" ]]; then
-    rm "$table_name" && echo "Table '$table_name' dropped successfully."
-  else
-    echo "Error: Table '$table_name' does not exist."
-  fi
-}
 
 insert_into_table() {
 	echo "insert functionality Not implemented Yet :("
 }
-
-select_from_table() {
-  read -p "Enter the table name: " table_name
-  if [[ -f "$table_name" ]]; then
-    echo "Contents of table '$table_name':"
-      column -t -s ',' "$table_name"
-  else
-    echo "Error: Table '$table_name' does not exist."
-  fi
-}
-
 
 delete_from_table() {
 	echo "delete functionality Not implemented Yet :("

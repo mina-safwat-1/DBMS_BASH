@@ -11,7 +11,6 @@ function delete
 delete $1 $2 $3
 
 
-
 # update - delete
 # 1 - select database
 # 2 - select Update Row
@@ -28,3 +27,5 @@ delete $1 $2 $3
 # 	# loop
 # 	4.1 - show each column in table with data type
 # 	4.2 - insert column by column (validate empyt line + validate data type)
+
+

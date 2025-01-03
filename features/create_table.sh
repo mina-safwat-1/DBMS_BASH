@@ -192,4 +192,4 @@ function create_table
 }
 
 # only need path of database directory
-create_table $1
+# create_table $1
