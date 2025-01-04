@@ -12,13 +12,16 @@ function select_table
     
     else
         echo "Select a table to update"
-        
+        tables+=("Quit")
         select table in "${tables[@]}"; do
             if [[ -z $table ]]; then
                 # -Z means empty
                 echo "Invalid selection"
+            elif [[ $table == "Quit" ]]; then
+                echo "Exiting..."
+                return 0
             else
-                break
+                return 1
             fi
         done
     fi
@@ -81,8 +84,9 @@ function insert_search_value
     else
         echo "The value '$search_value' is not in the table no row will be updated."
         ## fix this must remove exit it colse the program
-        exit 1
-    fi    
+        return 0
+    fi  
+    return 1  
 }
 
 ## to insert value to be updated
@@ -138,12 +142,14 @@ function insert_updated_value
 
 }
 
-
+## main functon to update the table
 function update_table
 {   
     
     database_path="$1";
     select_table;
+    if [[ $? -eq 1 ]]; then
+
     echo "Selected table: $table"
     
     
@@ -153,6 +159,9 @@ function update_table
     
     insert_search_value
     
+    
+    if [[ $? -eq 1 ]]; then
+        
     echo "Select a column to be updated"
     select_column
     echo "Selected column to be updated: $column"
@@ -161,7 +170,12 @@ function update_table
     pk_column_index=($(sed -n '5p' "$meta_table" | cut -d: -f2))
     
     insert_updated_value
+    fi
+    fi
+
+
 
 
 }
 ## only need to pass the database path
+update_table "$1"
