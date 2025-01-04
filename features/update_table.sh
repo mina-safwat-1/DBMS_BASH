@@ -178,4 +178,4 @@ function update_table
 
 }
 ## only need to pass the database path
-update_table "$1"
+##update_table "$1"
