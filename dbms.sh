@@ -1,10 +1,10 @@
-#!/usr/bin/bash
+#!/usr/bin/bash 
 
 source config
 source features/create_table.sh
 source features/insert.sh
 source features/rest.sh
-
+source features/delete_row.sh
 
 validate_db_name() {
   if [[ $1 =~ ^[a-z][a-z0-9_]*$ ]]; then
@@ -150,7 +150,7 @@ table_menu() {
 	    select_from_table
 	    ;;
 	  6)
-	    delete_from_table
+	    delete_flow
 	    ;;
 	  7)
 	    update_row

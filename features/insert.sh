@@ -12,11 +12,6 @@ source "helper/meta_helper"
 # 	4.2 - insert column by column (validate empyt line + validate data type)
 
 
-
-
-
-
-
 function insert_into_table {
     # $1 table_name
 
@@ -41,6 +36,8 @@ function insert_into_table {
     n_columns=$(get_meta_n_columns $table_meta)
 
     names_columns=$(get_meta_names_columns $table_meta)
+
+    echo $names_columns
 
     dt_columns=$(get_meta_dt_columns $table_meta)
 
