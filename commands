@@ -1,0 +1,2 @@
+CONNECT iti
+INSERT INTO students VALUES ( 5, mina, 10 )   

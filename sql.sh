@@ -4,7 +4,8 @@ source ./dbms.sh
 source features/rest.sh
 source helper/validation
 source config
-
+source features/insert.sh
+source features/delete_row.sh
 
 
 
@@ -50,21 +51,27 @@ extract_insert_into_table_input(){
     tokens=("$@")
     table_name=${tokens[2]}
 
-    column_values=$(echo "$@" | grep -oP '\(.*\)' | tr -d '()')
+    column_values=$(echo "$@" | grep -oP '\(.*\)' | tr -d '()' | tr -d " ") 
+
+
+    insert_into_table_sql $table_name  $column_values
         
-        # Initialize lists
-        local values_list=()
+        # # Initialize lists
+        # local values_list=()
         
-        # Parse column definitions
-        IFS=',' read -r -a columns <<< "$column_values"
-        for column in "${columns[@]}"; do
-            value=$(echo "$column" | xargs) 
-            values_list+=("$value")
-        done
-        
-        # Output the extracted information
-        echo "Table Name: $table_name"
-        echo "values List: ${values_list[*]}"
+        # # Parse column definitions
+        # IFS=',' read -r -a columns <<< "$column_values"
+        # for column in "${columns[@]}"; do
+        #     value=$(echo "$column" | xargs) 
+        #     values_list+=("$value")
+        # done
+        # result=$(IFS=,; echo "${values_list[*]}")
+
+        # # Output the extracted information
+        # echo "Table Name: $table_name"
+        # echo "values List: ${values_list[*]}"
+
+    
 
 
 }
@@ -274,7 +281,7 @@ while true; do
 done
 }
 
-start
+# start
 
 
 

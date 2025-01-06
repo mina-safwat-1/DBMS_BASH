@@ -142,8 +142,8 @@ function insert_into_table_sql()
 
 
     # replace comma with space
-    values=$(echo $2 | tr [","] [" "])
-    dt_names=$(echo $dt_columns | tr [","] [" "])
+    values=$(echo $2 | tr "," " ")
+    dt_names=$(echo $dt_columns | tr "," " ")
 
     # Convert the strings into arrays
     values_array=($values)
@@ -161,10 +161,21 @@ function insert_into_table_sql()
         return 1
     fi
 
+    pk_index=$(get_meta_pk_index $table_meta)
+
+
+
 
     # validation
     for((i=0; i < $num_values; i++));
     do
+
+        if [ $i -eq $(($pk_index - 1)) ]; then
+            if ! check_unique_data $pk_index "$table_name.data" ${values_array[i]}; then
+                return 1
+            fi
+        fi
+
         if [ ${dt_array[i]} = "int" ]
         then
             if ! check_int ${values_array[i]}; then

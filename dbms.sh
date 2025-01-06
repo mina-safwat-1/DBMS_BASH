@@ -116,14 +116,14 @@ main_menu(){
 		2)
 		    list_databases
 		    ;;
-  	3)
+  		3)
 			read -p "Please enter Database name: " db_name
 			if validate_connect_db "$db_name"; then 
 				table_menu
 			fi
 
 	    ;;
-  	4)
+  		4)
 			read -p "Please enter Database name: " db_name
 	    validate_drop_db "$db_name"
 	    ;;

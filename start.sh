@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-source ./main_menu.sh
+source ./dbms.sh
 source ./sql.sh
 
 while true; do
