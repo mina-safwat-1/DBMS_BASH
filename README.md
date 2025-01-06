@@ -12,8 +12,8 @@ Ensure that Bash is installed on your system. This project is compatible with Un
 ### Running the Project
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone \<repository-url\>
+   cd \<repository-directory\>
    ```
 2. **Give execute permissions to the scripts**:
    ```bash
@@ -53,14 +53,14 @@ The Menu-Based interface offers these options:
 In the SQL-Based interface, you can run commands in an SQL-like syntax. Some supported commands include:
 
 - **LIST ALL**: Lists all databases.
-- **CREATE DATABASE <database name>**: Creates a new database.
-- **DROP DATABASE <database name>**: Deletes a database.
-- **CONNECT <database name>**: Connects to a database.
-- **CREATE TABLE <table name> ( <col1> <type>, <col2> <type> pk , ..., <coln> <type> )**: Creates a new table.
-- **INSERT INTO <table name> VALUES ( <value1>, <value2>, ..., <valuen> )**: Inserts data into a table.
-- **SELECT <table name>**: Displays all rows from a table.
-- **UPDATE <table name> SET <col>=<value> WHERE <col>=<val>**: Updates rows in a table.
-- **DELETE FROM <table name> WHERE <col> = <val>**: Deletes rows from a table.
+- **CREATE DATABASE \<database name\>**: Creates a new database.
+- **DROP DATABASE \<database name\>**: Deletes a database.
+- **CONNECT \<database name\>**: Connects to a database.
+- **CREATE TABLE \<table name\> ( \<col1\> \<type\>, \<col2\> \<type\> pk , ..., \<coln\> \<type\> )**: Creates a new table.
+- **INSERT INTO \<table name\> VALUES ( \<value1\>, \<value2\>, ..., \<valuen\> )**: Inserts data into a table.
+- **SELECT \<table name\>**: Displays all rows from a table.
+- **UPDATE \<table name\> SET \<col\>=\<value\> WHERE \<col\>=\<val\>**: Updates rows in a table.
+- **DELETE FROM \<table name\> WHERE \<col\> = \<val\>**: Deletes rows from a table.
 - **EXIT**: Exits the SQL interface.
 
 ## Features
@@ -70,6 +70,4 @@ In the SQL-Based interface, you can run commands in an SQL-like syntax. Some sup
 
 ## Error Handling
 The scripts include error handling to manage invalid inputs and operations, providing a more robust user experience.
-
-
 
