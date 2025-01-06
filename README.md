@@ -12,8 +12,8 @@ Ensure that Bash is installed on your system. This project is compatible with Un
 ### Running the Project
 1. **Clone the repository**:
    ```bash
-   git clone \<repository-url\>
-   cd \<repository-directory\>
+   git clone <repository-url>
+   cd <repository-directory>
    ```
 2. **Give execute permissions to the scripts**:
    ```bash
