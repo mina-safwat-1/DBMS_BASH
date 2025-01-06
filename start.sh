@@ -20,7 +20,7 @@ while true; do
 		    start
 		    ;;
 
-	  	5)
+	  	3)
 		    echo "Exiting..."
 		    break
 		    ;;

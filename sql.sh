@@ -39,11 +39,6 @@ extract_create_table_input(){
             datatype_list+=("$type")
         done
         
-        # Output the extracted information
-        # echo "Table Name: $table_name"
-        # echo "Primary Key Column: $pk_column"
-        # echo "Column List: ${column_list[*]}"
-        # echo "Data Type List: ${datatype_list[*]}"
 
         create_table_sql . $table_name ${#column_list[@]} ${column_list[@]} ${datatype_list[@]} $pk_column
 

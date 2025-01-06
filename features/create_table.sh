@@ -4,18 +4,13 @@ source "helper/validation"
 
 
 ## function read table name 
-# get table name
-# 
-# create table table_name (
-# 	column_name data_type pk,
-# 	column_name data_type,
-# )
+
 
 function get_table_name
 {
 
 check=0
-while [ $check -eq 0 ]	
+while [ $check -eq 0 ]
 	do
 		echo "Enter table name:"
 		read table_name
@@ -30,7 +25,6 @@ while [ $check -eq 0 ]
 			continue
 		fi
 		
-
 		if [ -f "${table_name}.data" ]; then
 			echo "Error: Table name already exists."
 			check=0
@@ -47,7 +41,8 @@ while [ $check -eq 0 ]
 function get_columns_number
 {
 check=0
-while [ $check -eq 0 ]	
+echo "not enter while"
+while [ $check -eq 0 ]
 	do
 
 		echo "Enter number of columns:"
@@ -105,7 +100,7 @@ function get_column_datatype {
                 check=1
                 break
             else
-                echo "Invalid selection. Please choose either 'string' or 'int'."
+                echo "Invalid selection. Please choose either 'text' or 'int'."
             fi
         done
     done
@@ -160,6 +155,7 @@ function create_table
 	
 	#get table name and number of columns
 	get_table_name
+	
 	get_columns_number
 	
 	#set columns name and datatypes
@@ -193,13 +189,8 @@ function create_table
 	
 	echo "pk_column_number:$pk_column">>${path}.meta
 	
-	echo "Table created successfully."
-	
 
 }
 
 # only need path of database directory
 # create_table $1
-
-# create_table table_name pk column_list datatype_list
-

@@ -203,6 +203,7 @@ table_menu() {
 	    echo "Invalid option. Please try again."
 	    ;;
 	esac
+	read -p "Press Enter to return to the menu..."
 done
 }
 

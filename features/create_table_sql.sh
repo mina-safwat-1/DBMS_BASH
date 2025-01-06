@@ -22,7 +22,7 @@ function check_table_name
     return 1
 }
 
-function get_columns_number
+function get_columns_number_
 {
    
     local size_column_names=${#column_names[@]}
@@ -72,7 +72,7 @@ function check_column_datatype
 	
 }
 
-function get_pk_column
+function get_pk_column_
 {
 
 
@@ -100,23 +100,13 @@ function create_table_sql
     column_datatypes=("${inputs[@]:$((3 + $len)): $len}")  # Correct way to pass an array as a parameter
     pk_column=${inputs[-1]}
 
-    echo $database_path
-    echo $table_name
-    echo $len
-    echo $column_names[@]
-    echo $column_datatypes
-    echo $pk_column
-
     column_names_checker=()
-
-
-
 
 
     check_table_name "$table_name"
     result_table_name=$?
 
-    get_columns_number 
+    get_columns_number_
     columns_number=$?
 
     if [ "$columns_number" -gt 0 ]; then
@@ -140,7 +130,7 @@ function create_table_sql
 	done
 
     fi
-    get_pk_column
+    get_pk_column_
     
     pk_column=$?
 
