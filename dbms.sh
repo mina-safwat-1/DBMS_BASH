@@ -15,6 +15,19 @@ validate_db_name() {
   fi
 }
 
+validate_create_db(){
+
+  if validate_db_name "$1"; then
+    if ! db_exists "$1"; then
+    	create_database "$1"
+    else
+      echo "Error: Database '$1' already exists."
+    fi
+  else
+    echo "Error: Invalid database name. Must start with a lowercase letter and contain only lowercase letters, digits and _."
+  fi
+}
+
 db_exists() {
   if [[ -d $db_path/"$1" ]]; then
     return 0 # Exists
@@ -32,16 +45,8 @@ not_inside_db() {
 }
 
 create_database() {
-  read -p "Please enter Database name: " db_name
-  if validate_db_name "$db_name"; then
-    if ! db_exists "$db_name"; then
-      mkdir -p $db_path/"$db_name" && echo "Database '$db_name' created successfully."
-    else
-      echo "Error: Database '$db_name' already exists."
-    fi
-  else
-    echo "Error: Invalid database name. Must start with a lowercase letter and contain only lowercase letters, digits and _."
-  fi
+	# $1 --> databse name
+  mkdir -p $db_path/"$1" && echo "Database '$1' created successfully."
 }
 
 list_databases() {
@@ -53,30 +58,38 @@ list_databases() {
   fi
 }
 
-connect_to_database() {
 
-# validate empty line
-  read -p "Please enter Database name: " db_name
-  if db_exists "$db_name"; then
-    cd $db_path/"$db_name" || echo "Error: Could not connect to database '$db_name'."
-    table_menu
+validate_connect_db(){
+	# validate empty line
+  if db_exists "$1"; then
+    connect_to_database "$1"
   else
-    echo "Error: Database '$db_name' does not exist."
+    echo "Error: Database '$1' does not exist."
   fi
+
+
+}
+connect_to_database() {
+	echo "connect to $1"
+  cd $db_path/"$1" || echo "Error: Could not connect to database '$1'."
+  table_menu
 }
 
-
-drop_database() {
-  read -p "Please enter Database name: " db_name
-  if db_exists "$db_name"; then
+validate_drop_db(){
+	if db_exists "$1"; then
     if not_inside_db; then
-      rm -r $db_path/"$db_name" && echo "Database '$db_name' dropped successfully."
+      drop_database "$1"
     else
       echo "Error: Cannot drop the database while inside it."
     fi
   else
-    echo "Error: Database '$db_name' does not exist."
+    echo "Error: Database '$1' does not exist."
   fi
+
+}
+
+drop_database() {
+  rm -r $db_path/"$1" && echo "Database '$1' dropped successfully."
 }
 
 main_menu(){
@@ -89,35 +102,49 @@ main_menu(){
 	echo "4) Drop Database"
 	echo "5) Exit"
 	echo
+	
 	read -p "Choose an option [1-5]: " choice
 
 	case $choice in
 		1)
-			create_database
+			read -p "Please enter Database name: " db_name
+			validate_create_db "$db_name"
 		    ;;
 		2)
 		    list_databases
 		    ;;
-	  	3)
-		    connect_to_database
-		    ;;
-	  	4)
-		    drop_database
-		    ;;
-	  	5)
-		    echo "Exiting..."
-		    break
-		    ;;
-	  	*)
-		    echo "Invalid option. Please try again."
-		    ;;
+  	3)
+			read -p "Please enter Database name: " db_name
+			validate_connect_db "$db_name"
+	    ;;
+  	4)
+			read -p "Please enter Database name: " db_name
+	    validate_drop_db "$db_name"
+	    ;;
+  	5)
+	    echo "Exiting..."
+	    break
+	    ;;
+  	*)
+	    echo "Invalid option. Please try again."
+	    ;;
 	esac
-    read -p "Press Enter to return to the menu..."
  done 
 }
 
 #________________________________________________________________________#
 
+
+
+is_connected(){
+	current_path=$(pwd | rev | cut -d/ -f2 | rev)
+  if [[ $current_path == $db_path ]]; then
+  	return 0
+  else
+  	echo "please connect to a database first..."
+  	return 1
+  fi
+}
 
 table_menu() {
 	while true; do 
@@ -132,6 +159,7 @@ table_menu() {
 	echo "7) Update Row"
 	echo "8) Exit"
 	echo
+	
 	read -p "Choose an option [1-8]: " choice
 
 	case $choice in
@@ -142,13 +170,15 @@ table_menu() {
 	    list_tables
 	    ;;
 	  3)
-	    drop_table
+			read -p "Enter the table name to drop: " table_name
+	    drop_table "$table_name"
 	    ;;
 	  4)
 	    insert_into_table
 	    ;;
 	  5)
-	    select_from_table
+			read -p "Enter the table name: " table_name
+	    select_from_table "$table_name"
 	    ;;
 	  6)
 	    delete_flow
@@ -157,6 +187,8 @@ table_menu() {
 	    update_table .
 	    ;;
 	  8)
+			cd ../..
+			pwd
 	    echo "Returning to Main Menu..."
 	    break
 	    ;;
@@ -164,16 +196,15 @@ table_menu() {
 	    echo "Invalid option. Please try again."
 	    ;;
 	esac
-    read -p "Press Enter to return to the menu..."
 done
 }
 
 
-delete_from_table() {
+delete_from_table(){
 	echo "delete functionality Not implemented Yet :("
 }
 
-update_row() {
+update_row(){
 	echo "update functionality Not implemented Yet :("
 }
 
