@@ -78,3 +78,32 @@ function delete_flow
 
 
 }
+
+
+
+function delete_sql
+{
+
+	# $1 is consider the name of the data file without any extension 
+	# $2 is consider the name of column
+	# $3 is consider the value that we want to remove the record contains it
+
+	table_name=$1
+
+	# validate table name if exists
+	if ! table_exits "$table_name.meta"; then
+		echo "table not exist"
+		return 1
+	fi
+
+    table_meta="$table_name.meta"
+
+	column_index=$(get_column_index $table_meta $2)
+
+	column_value=$3
+
+	delete "$table_name.data" $column_index $column_value
+
+}
+
+delete_sql "../database/iti/students" $name megz
