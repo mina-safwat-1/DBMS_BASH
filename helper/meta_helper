@@ -96,7 +96,7 @@ function get_column_index {
     meta_path=$1
     column_name=$2
 
-    meta_names=$(get_meta_names_columns $meta_path | tr [','] [' '])
+    meta_names=$(get_meta_names_columns $meta_path | tr ',' ' ')
     n_columns=$(get_meta_n_columns $meta_path)
 
 

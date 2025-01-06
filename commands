@@ -1,2 +1,16 @@
+# insert commands 
 CONNECT iti
 INSERT INTO students VALUES ( 5, mina, 10 )   
+
+
+# delete commands
+CONNECT iti
+DELETE FROM students WHERE id = 15
+
+
+# update commands
+CONNECT iti
+UPDATE students SET name=mina WHERE id=5
+
+# exit
+EXIT

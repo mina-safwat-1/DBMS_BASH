@@ -6,6 +6,9 @@ source helper/validation
 source config
 source features/insert.sh
 source features/delete_row.sh
+source features/create_table_sql.sh
+source features/update_table_sql.sh
+
 
 
 
@@ -56,24 +59,6 @@ extract_insert_into_table_input(){
 
     insert_into_table_sql $table_name  $column_values
         
-        # # Initialize lists
-        # local values_list=()
-        
-        # # Parse column definitions
-        # IFS=',' read -r -a columns <<< "$column_values"
-        # for column in "${columns[@]}"; do
-        #     value=$(echo "$column" | xargs) 
-        #     values_list+=("$value")
-        # done
-        # result=$(IFS=,; echo "${values_list[*]}")
-
-        # # Output the extracted information
-        # echo "Table Name: $table_name"
-        # echo "values List: ${values_list[*]}"
-
-    
-
-
 }
 
 extract_delete_from_table_input(){
@@ -85,9 +70,7 @@ extract_delete_from_table_input(){
     column_name=$(echo ${tokens[@]:4} | cut -d= -f1 )
     value=$(echo ${tokens[@]:4} | cut -d= -f2 )
 
-    echo "table name ${table_name}"
-    echo "column name ${column_name}"
-    echo "values ${value}"
+    delete_sql $table_name $column_name $value
 
 
 }
@@ -103,11 +86,13 @@ extract_update_table_input(){
     selected_column=$(echo ${tokens[5]} | cut -d= -f1 )
     selected_value=$(echo ${tokens[5]} | cut -d= -f2 )
 
-    echo "updated table name ${table_name}"
-    echo "updated column name ${updated_column}"
-    echo "updated value ${updated_value}"
-    echo "selected column name ${selected_column}"
-    echo "selected value ${selected_value}"
+    # echo "updated table name ${table_name}"
+    # echo "updated column name ${updated_column}"
+    # echo "updated value ${updated_value}"
+    # echo "selected column name ${selected_column}"
+    # echo "selected value ${selected_value}"
+
+    update_table_sql . $table_name $selected_column $selected_value $updated_column $updated_value
 }
 
 
@@ -249,7 +234,6 @@ parse() {
             ;;
         UPDATE)
             if [[ "${tokens[1]}" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ && ${tokens[2]} == "SET" && ${tokens[4]} == "WHERE" ]]; then
-                echo "Valid DELETE FROM statement."
                 # validate that connected to database
                  curr_dir=$(pwd | rev | cut -d/ -f1 | rev)
                 if is_connected $curr_dir; then
@@ -257,7 +241,7 @@ parse() {
                 fi
 
             else
-                echo "Error: Invalid DELETE FROM syntax."
+                echo "Error: Invalid UPDATE syntax."
             fi
             ;;           
         *)
