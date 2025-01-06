@@ -105,7 +105,7 @@ function get_column_datatype {
                 check=1
                 break
             else
-                echo "Invalid selection. Please choose either 'text' or 'int'."
+                echo "Invalid selection. Please choose either 'string' or 'int'."
             fi
         done
     done
@@ -192,6 +192,8 @@ function create_table
 	echo "columns_datatypes:$columns_datatype_string">>${path}.meta
 	
 	echo "pk_column_number:$pk_column">>${path}.meta
+	
+	echo "Table created successfully."
 	
 
 }
