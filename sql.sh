@@ -40,11 +40,12 @@ extract_create_table_input(){
         done
         
         # Output the extracted information
-        echo "Table Name: $table_name"
-        echo "Primary Key Column: $pk_column"
-        echo "Column List: ${column_list[*]}"
-        echo "Data Type List: ${datatype_list[*]}"
+        # echo "Table Name: $table_name"
+        # echo "Primary Key Column: $pk_column"
+        # echo "Column List: ${column_list[*]}"
+        # echo "Data Type List: ${datatype_list[*]}"
 
+        create_table_sql . $table_name ${#column_list[@]} ${column_list[@]} ${datatype_list[@]} $pk_column
 
 }
 
@@ -86,11 +87,6 @@ extract_update_table_input(){
     selected_column=$(echo ${tokens[5]} | cut -d= -f1 )
     selected_value=$(echo ${tokens[5]} | cut -d= -f2 )
 
-    # echo "updated table name ${table_name}"
-    # echo "updated column name ${updated_column}"
-    # echo "updated value ${updated_value}"
-    # echo "selected column name ${selected_column}"
-    # echo "selected value ${selected_value}"
 
     update_table_sql . $table_name $selected_column $selected_value $updated_column $updated_value
 }

@@ -92,12 +92,24 @@ function get_pk_column
 
 function create_table_sql
 {
+    inputs=("$@")
     database_path=$1
     table_name=$2
-    column_names=("${!3}")  # Correct way to pass an array as a parameter
-    column_datatypes=("${!4}")  # Correct way to pass an array as a parameter
-    pk_column=$5
+    len=$3
+    column_names=("${inputs[@]:3: $len}")  # Correct way to pass an array as a parameter
+    column_datatypes=("${inputs[@]:$((3 + $len)): $len}")  # Correct way to pass an array as a parameter
+    pk_column=${inputs[-1]}
+
+    echo $database_path
+    echo $table_name
+    echo $len
+    echo $column_names[@]
+    echo $column_datatypes
+    echo $pk_column
+
     column_names_checker=()
+
+
 
 
 
@@ -155,11 +167,7 @@ function create_table_sql
         echo "pk_column_number:$pk_column">>"${path}".meta
         
         echo "Table created successfully."    
-
-    else
-    
-        echo "Error in SQL syntax"
-    
+   
     fi
 
 }

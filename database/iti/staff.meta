@@ -1,0 +1,5 @@
+table_name:staff
+columns_number:3
+columns_name:id,name,salary
+columns_datatypes:int,string,int
+pk_column_number:1

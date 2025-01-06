@@ -136,8 +136,7 @@ function update_table_sql
 
     if [[ $? -eq 0 ]]; then
 
-        echo "Error in SQL Syntax"
-        return 0
+               return 0
 
     fi
     check_column "$column_identifier"
@@ -145,15 +144,13 @@ function update_table_sql
         column_index=$?
     
     if [[ $column_index -eq 0 ]]; then
-        echo "Error in SQL Syntax"
-        return 0
+               return 0
     fi
     
     check_search_value
     
     if [[ $? -eq 0 ]]; then
-        echo "Error in SQL Syntax"
-        return 0
+               return 0
 
     fi
 
@@ -162,8 +159,7 @@ function update_table_sql
      column_index=$?
     
     if [[ $column_index -eq 0 ]]; then
-        echo "Error in SQL Syntax"
-        return 0
+               return 0
     fi
 
     pk_column_index=($(sed -n '5p' "$meta_table" | cut -d: -f2))
@@ -172,8 +168,7 @@ function update_table_sql
 
     if [[ $? -eq 0 ]]; then
 
-        echo "Error in SQL Syntax"
-        return 0
+               return 0
 
     fi
     awk -F, -v var1="${rows_indices[*]}" -v var2="$column_index" -v var3="$new_value" 'BEGIN {OFS=","; split(var1, rows, " ")} {for (i in rows) {if (NR == rows[i]) { $var2 = var3 }}; print}' "$data_table" > temp && mv temp "$data_table"

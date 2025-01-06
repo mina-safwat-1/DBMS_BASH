@@ -10,7 +10,11 @@ DELETE FROM students WHERE id = 15
 
 # update commands
 CONNECT iti
-UPDATE students SET name=mina WHERE id=5
+UPDATE students SET degree=ljfdk WHERE name=5
 
 # exit
 EXIT
+
+# create commands
+CONNECT iti
+CREATE TABLE staff ( id int pk, name string, salary int )
