@@ -15,18 +15,6 @@ validate_db_name() {
   fi
 }
 
-validate_create_db(){
-
-  if validate_db_name "$1"; then
-    if ! db_exists "$1"; then
-    	create_database "$1"
-    else
-      echo "Error: Database '$1' already exists."
-    fi
-  else
-    echo "Error: Invalid database name. Must start with a lowercase letter and contain only lowercase letters, digits and _."
-  fi
-}
 
 db_exists() {
   if [[ -d $db_path/"$1" ]]; then
@@ -43,6 +31,20 @@ not_inside_db() {
     return 1 # Inside
   fi
 }
+
+validate_create_db(){
+
+  if validate_db_name "$1"; then
+    if ! db_exists "$1"; then
+    	create_database "$1"
+    else
+      echo "Error: Database '$1' already exists."
+    fi
+  else
+    echo "Error: Invalid database name. Must start with a lowercase letter and contain only lowercase letters, digits and _."
+  fi
+}
+
 
 create_database() {
 	# $1 --> databse name
@@ -63,8 +65,10 @@ validate_connect_db(){
 	# validate empty line
   if db_exists "$1"; then
     connect_to_database "$1"
+    return 0
   else
     echo "Error: Database '$1' does not exist."
+    return 1
   fi
 
 
@@ -72,7 +76,6 @@ validate_connect_db(){
 connect_to_database() {
 	echo "connect to $1"
   cd $db_path/"$1" || echo "Error: Could not connect to database '$1'."
-  table_menu
 }
 
 validate_drop_db(){
@@ -113,14 +116,17 @@ main_menu(){
 		2)
 		    list_databases
 		    ;;
-		3)
+  	3)
 			read -p "Please enter Database name: " db_name
-			validate_connect_db "$db_name"
-			;;
-		4)
+			if validate_connect_db "$db_name"; then 
+				table_menu
+			fi
+
+	    ;;
+  	4)
 			read -p "Please enter Database name: " db_name
-			validate_drop_db "$db_name"
-			;;
+	    validate_drop_db "$db_name"
+	    ;;
 		5)
 			echo "Exiting..."
 			break
@@ -138,11 +144,11 @@ main_menu(){
 
 
 is_connected(){
-	current_path=$(pwd | rev | cut -d/ -f2 | rev)
-  if [[ $current_path == $db_path ]]; then
+	current_path=$(pwd | rev | cut -d/ -f1,2 | rev)
+  if [[ $current_path == "database/$1" ]]; then
   	return 0
   else
-  	echo "please connect to a database first..."
+  	echo "please connect to $1 database first..."
   	return 1
   fi
 }
@@ -209,4 +215,3 @@ update_row(){
 	echo "update functionality Not implemented Yet :("
 }
 
-main_menu
