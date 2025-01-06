@@ -111,5 +111,3 @@ function delete_sql
 	delete "$table_name.data" $column_index $column_value
 
 }
-
-delete_sql "../database/iti/students" $name megz
