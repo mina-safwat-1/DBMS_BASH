@@ -100,6 +100,12 @@ function delete_sql
 
 	column_index=$(get_column_index $table_meta $2)
 
+	if [ $column_index -eq -1 ]; then
+
+		echo "column not found"
+		return 1
+	fi
+
 	column_value=$3
 
 	delete "$table_name.data" $column_index $column_value
