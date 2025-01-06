@@ -83,7 +83,6 @@ function insert_search_value
         printf "%s \n" "${rows_indices[1]}"
     else
         echo "The value '$search_value' is not in the table no row will be updated."
-        ## fix this must remove exit it colse the program
         return 0
     fi  
     return 1  
@@ -172,9 +171,6 @@ function update_table
     insert_updated_value
     fi
     fi
-
-
-
 
 }
 ## only need to pass the database path
