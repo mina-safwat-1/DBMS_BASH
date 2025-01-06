@@ -120,3 +120,64 @@ function insert_into_table {
 
 }
 
+function insert_into_table_sql()
+{
+
+    # $1 table_name without any extension
+    # $2 list of values comma seprated  values="1,mina,hh"
+
+    table_name=$1
+
+	# validate table name if exists
+	if ! table_exits "$table_name.meta"; then
+		echo "table not exist"
+		return 1
+	fi
+
+
+    table_meta="$table_name.meta"
+
+    dt_columns=$(get_meta_dt_columns $table_meta)
+
+
+
+    # replace comma with space
+    values=$(echo $2 | tr [","] [" "])
+    dt_names=$(echo $dt_columns | tr [","] [" "])
+
+    # Convert the strings into arrays
+    values_array=($values)
+    dt_array=($dt_names)
+
+    # check the lenght of each array
+    num_values=${#values_array[@]}
+    num_dt=${#dt_array[@]}
+
+
+    # check the number of inputs equal number of cols
+    if [ $num_values -ne $num_dt ]
+    then
+        echo "invalid number of values"
+        return 1
+    fi
+
+
+    # validation
+    for((i=0; i < $num_values; i++));
+    do
+        if [ ${dt_array[i]} = "int" ]
+        then
+            if ! check_int ${values_array[i]}; then
+                return 1
+            fi
+        else
+            if ! check_starting_string "${values_array[i]}"; then
+                return 1
+            fi
+
+        fi
+    done
+
+    echo $2 >> "$1.data"
+}
+
