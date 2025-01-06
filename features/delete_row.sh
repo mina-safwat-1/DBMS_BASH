@@ -8,6 +8,7 @@ function delete
 {
 	# $1 is consider the name of the data file
 	# $2 is consider the index of the column
+	# convert column to index
 	# $3 is consider the value that we want to remove the record contains it
 	awk -F, -v val=$3 -v col=$2 '{if ($col != val) print $0}' $1 > tmp
 	mv tmp $1
@@ -40,7 +41,6 @@ function delete_flow
 	done
 
     table_meta="$table_name.meta"
-
 
 
     n_columns=$(get_meta_n_columns $table_meta)
@@ -76,5 +76,38 @@ function delete_flow
 
 	delete "$table_name.data" $index $val
 
+
+}
+
+
+
+function delete_sql
+{
+
+	# $1 is consider the name of the data file without any extension 
+	# $2 is consider the name of column
+	# $3 is consider the value that we want to remove the record contains it
+
+	table_name=$1
+
+	# validate table name if exists
+	if ! table_exits "$table_name.meta"; then
+		echo "table not exist"
+		return 1
+	fi
+
+    table_meta="$table_name.meta"
+
+	column_index=$(get_column_index $table_meta $2)
+
+	if [ $column_index -eq -1 ]; then
+
+		echo "column not found"
+		return 1
+	fi
+
+	column_value=$3
+
+	delete "$table_name.data" $column_index $column_value
 
 }

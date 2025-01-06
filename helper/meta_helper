@@ -79,3 +79,44 @@ function check_unique_data {
 
 }
 
+function get_column_dt {
+    meta_path=$1
+    column_index=$2
+
+    col_dt=$(get_meta_dt_columns $meta_path)
+
+    dt=$(echo $col_dt | cut -d "," -f $column_index)
+
+    echo $dt
+
+}
+
+
+function get_column_index {
+    meta_path=$1
+    column_name=$2
+
+    meta_names=$(get_meta_names_columns $meta_path | tr [','] [' '])
+    n_columns=$(get_meta_n_columns $meta_path)
+
+
+    index=1
+
+    for col in $meta_names; 
+        do
+            if [ $col = $column_name ]; then
+                break
+            fi
+            index=$(($index+1))
+        done
+    
+    if [ $index -gt $n_columns ]; then
+        echo "-1"
+    else
+        echo $index
+    fi
+
+}
+
+# get_column_index ../database/iti/students.meta degree
+# get_column_dt ../database/iti/students.meta 1

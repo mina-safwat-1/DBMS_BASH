@@ -127,14 +127,15 @@ main_menu(){
 			read -p "Please enter Database name: " db_name
 	    validate_drop_db "$db_name"
 	    ;;
-  	5)
-	    echo "Exiting..."
-	    break
-	    ;;
-  	*)
-	    echo "Invalid option. Please try again."
-	    ;;
+		5)
+			echo "Exiting..."
+			break
+			;;
+		*)
+			echo "Invalid option. Please try again."
+			;;
 	esac
+	read -p "Press Enter to return to the menu..."
  done 
 }
 

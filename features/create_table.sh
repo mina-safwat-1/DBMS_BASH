@@ -4,7 +4,12 @@ source "helper/validation"
 
 
 ## function read table name 
-
+# get table name
+# 
+# create table table_name (
+# 	column_name data_type pk,
+# 	column_name data_type,
+# )
 
 function get_table_name
 {
@@ -100,7 +105,7 @@ function get_column_datatype {
                 check=1
                 break
             else
-                echo "Invalid selection. Please choose either 'text' or 'int'."
+                echo "Invalid selection. Please choose either 'string' or 'int'."
             fi
         done
     done
@@ -188,8 +193,13 @@ function create_table
 	
 	echo "pk_column_number:$pk_column">>${path}.meta
 	
+	echo "Table created successfully."
+	
 
 }
 
 # only need path of database directory
 # create_table $1
+
+# create_table table_name pk column_list datatype_list
+
