@@ -8,6 +8,7 @@ function delete
 {
 	# $1 is consider the name of the data file
 	# $2 is consider the index of the column
+	# convert column to index
 	# $3 is consider the value that we want to remove the record contains it
 	awk -F, -v val=$3 -v col=$2 '{if ($col != val) print $0}' $1 > tmp
 	mv tmp $1
@@ -40,7 +41,6 @@ function delete_flow
 	done
 
     table_meta="$table_name.meta"
-
 
 
     n_columns=$(get_meta_n_columns $table_meta)

@@ -4,7 +4,12 @@ source "helper/validation"
 
 
 ## function read table name 
-
+# get table name
+# 
+# create table table_name (
+# 	column_name data_type pk,
+# 	column_name data_type,
+# )
 
 function get_table_name
 {
@@ -193,3 +198,6 @@ function create_table
 
 # only need path of database directory
 # create_table $1
+
+# create_table table_name pk column_list datatype_list
+

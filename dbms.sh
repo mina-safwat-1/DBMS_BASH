@@ -113,22 +113,23 @@ main_menu(){
 		2)
 		    list_databases
 		    ;;
-  	3)
+		3)
 			read -p "Please enter Database name: " db_name
 			validate_connect_db "$db_name"
-	    ;;
-  	4)
+			;;
+		4)
 			read -p "Please enter Database name: " db_name
-	    validate_drop_db "$db_name"
-	    ;;
-  	5)
-	    echo "Exiting..."
-	    break
-	    ;;
-  	*)
-	    echo "Invalid option. Please try again."
-	    ;;
+			validate_drop_db "$db_name"
+			;;
+		5)
+			echo "Exiting..."
+			break
+			;;
+		*)
+			echo "Invalid option. Please try again."
+			;;
 	esac
+	read -p "Press Enter to return to the menu..."
  done 
 }
 

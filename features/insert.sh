@@ -3,6 +3,17 @@
 source "helper/validation"
 source "helper/meta_helper"
 
+
+# table name , 6
+# check number of columns
+# check data type of each element
+# check pk is unique
+# insert into table
+
+# insert into table tablename
+# values (2,megz,10)
+
+
 # # insert
 # 1 - select database done
 # 2 - select insert data  done 
